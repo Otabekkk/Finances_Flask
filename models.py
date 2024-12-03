@@ -10,6 +10,6 @@ class Transaction(db.Model):
     name = db.Column(db.String(100), nullable = False)
     amount = db.Column(db.Integer, nullable = False)
     description = db.Column(db.String, nullable = False)
-    date_added = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    date_added = db.Column(db.DateTime, nullable = False, default = datetime.now)
 
  

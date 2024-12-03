@@ -7,7 +7,7 @@
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
     <title>Финансовый менеджер</title>
 </head>
-<form>
+<body>
     
     <div class="header">
         <h1>Finance Manager</h1>
@@ -39,23 +39,23 @@
                 <td>{{ transaction.name }}</td>
                 <td>{{ transaction.amount }}</td>
                 <td>{{ transaction.description }}</td>
-                <td>{{ transaction.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ transaction.date_added.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             </tr>
             {% endfor %}
         </table>
     </div>
-    <form id="transaction_form" method="POST" action="{{ url_for('add_transaction') }}"></form>
-        <div id="new_transaction" class="modal">
-            <div class="modal-content">
-                <h3>Create transaction</h3>
-
-                <label for="status">Category:</label>
+    
+    <div id="new_transaction" class="modal">
+        <div class="modal-content">
+            <h3>Create transaction</h3>
+            <form id="transaction_form" method="POST" action="{{ url_for('add_transaction') }}">
+                <label for="status">Status:</label>
                 <select name="status" id="status" required>
                     <option value="Income">Income</option>
                     <option value="Outcome">Outcome</option>
                 </select>
-
-                <label for="category">Transaction Name:</label>
+    
+                <label for="category">Category:</label>
                 <select name="category" id="category">
                     <option value="Work">Work</option>
                     <option value="Auto">Auto</option>
@@ -69,21 +69,24 @@
                     <option value="For Home">For Home</option>
                     <option value="Other">Other...</option>
                 </select>
-
+    
                 <label for="name">Name:</label>
                 <input placeholder="Name..." type="text" id="name" name="name" required>
-
-                <label for="description">Description</label>
+    
+                <label for="description">Description:</label>
                 <input type="text" placeholder="Description..." name="description" id="description" required>
-
+    
                 <label for="amount">Amount:</label>
                 <input placeholder="Sum..." type="number" id="amount" name="amount" required>
-
-                <button class="submit-btn" onclick="submitTransaction()">Submit</button>
+    
+                <button type="submit" class="submit-btn">Submit</button>
                 <button class="modal-close" onclick="closeModal()">Close</button>
-            </div>
+            </form>
+            
         </div>
-    </form>
+    </div>
+    
+
 
 
 </body>

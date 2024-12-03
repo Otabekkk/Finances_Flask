@@ -17,20 +17,23 @@ def index() -> render_template:
     return render_template('index.html', transactions = transactions)
 
 
-@app.route('/add', methods = ['POST'])
+@app.route('/add', methods = ['GET', 'POST'])
 def add_transaction():
-    status = request.form.get('status')
-    category = request.form.get('category')
-    name = request.form.get('name')
-    amount = request.form.get('amount')
-    description = request.form.get('description')
-    date_added = datetime.utcnow()
-    print(f"Name: {name}, Amount: {amount}, Category: {category}, Date Added: {date_added}")
-    new_transaction = Transaction(status = status, category = category, name = name, amount = amount, description = description, date_added = date_added)
-
-    db.session.add(new_transaction)
-    db.session.commit()
-    return redirect(url_for('index'))
+    if request.method  == 'POST':
+        status = request.form.get('status')
+        category = request.form.get('category')
+        name = request.form.get('name')
+        amount = request.form.get('amount')
+        description = request.form.get('description')
+        date_added = datetime.now()
+        new_transaction = Transaction(status = status, category = category, name = name, amount = int(amount), description = description, date_added = date_added)
+        
+        print(status, name, amount, date_added)
+        db.session.add(new_transaction)
+        db.session.commit()
+        return redirect(url_for('index'))
+    
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
