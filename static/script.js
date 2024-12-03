@@ -11,10 +11,10 @@ function closeModal() {
 }
 
 function submitTransaction() {
-    const name = document.getElementById('name').value;
-    const amount = document.getElementById('amount').value;
-    const category = document.getElementById('category').value;
+    // const name = document.getElementById('name').value;
+    // const amount = document.getElementById('amount').value;
+    // const category = document.getElementById('category').value;
     
-    alert(`Transaction Created: ${name}, $${amount}, ${category}`);
+    // alert(`Transaction Created: ${name}, $${amount}, ${category}`);
     closeModal();
 }
