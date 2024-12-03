@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <title>Финансовый менеджер</title>
+</head>
+<body>
+    
+    <div class="header">
+        <h1>Finance Manager</h1>
+        <div class="balance">
+            Balance: 1000$
+        </div>
+    </div>
+
+    <div class="actions">
+        <button id="create_btn">Create transaction</button>
+        <button onclick="alert('Eidt transaction')">Edit transaction</button>
+        <button onclick="alert('Delete transaction')">Delete transaction</button>
+    </div>
+
+    <div id="new_transaction" class="modal">
+        <div class="modal-content">
+            <h3>Create transaction</h3>
+
+            <label for="name">Transaction Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="amount">Amount:</label>
+            <input placeholder="Sum..." type="number" id="amount" name="amount" required>
+
+            <label for="category">Category:</label>
+            <select name="category" id="category" required>
+                <option value="Income">Income</option>
+                <option value="Outcome">Outcome</option>
+            </select>
+
+            <button class="submit-btn" onclick="submitTransaction()">Submit</button>
+            <button class="modal-close" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+
+</body>
+</html>
