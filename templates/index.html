@@ -22,6 +22,29 @@
         <button onclick="alert('Delete transaction')">Delete transaction</button>
     </div>
 
+    <div class="transactions">
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.category }}</td>
+                <td>{{ transaction.status }}</td>
+                <td>{{ transaction.name }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
     <div id="new_transaction" class="modal">
         <div class="modal-content">
             <h3>Create transaction</h3>
