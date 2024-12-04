@@ -28,7 +28,6 @@ def add_transaction():
         date_added = datetime.now()
         new_transaction = Transaction(status = status, category = category, name = name, amount = int(amount), description = description, date_added = date_added)
         
-        print(status, name, amount, date_added)
         db.session.add(new_transaction)
         db.session.commit()
         return redirect(url_for('index'))

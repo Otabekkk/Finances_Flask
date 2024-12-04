@@ -14,8 +14,8 @@ body {
 
 .actions button {
     margin: 10px;
-    height: 30px;
-    width: 50%;
+    height: 35px;
+    width: 20%;
     cursor: pointer;
     border: 1px solid white;
     background-color: aquamarine;
@@ -87,27 +87,78 @@ body {
     border-radius: 5px;
 } */
 
+/* 
 .balance {
-    /* width: 50%;
-    border: 1px solid black;
-    height: 50px; */
-    font-size: 2.0em;
+    font-size: 1.0em;
     font-weight: bold;
-    /* margin: 50px auto; */
-    width: 50%;
-    height: 200px;
+    width: 40%;
     position: relative;
+    height: 100px;
     background-color: white;
     border-radius: 25px;
     box-shadow: 10px 10px 200px 10px rgba(0, 0, 0, 0.2);
-}
+} */
 
 .header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 }
+
+
+.balance-card {
+    background-color: rgba(36, 246, 106, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.balance-card h2 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.balance-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.balance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.balance-item p {
+    margin: 0;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.balance-item span {
+    font-weight: bold;
+    color: #333;
+}
+
+.balance-item.income span {
+    color: green;
+}
+
+.balance-item.outcome span {
+    color: red;
+}
+
 
 .transactions {
     margin: 20px auto;
