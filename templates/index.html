@@ -11,8 +11,11 @@
     
     <div class="header">
         <h1>Finance Manager</h1>
+        <h2>Hi, User!</h2>
         <div class="balance">
-            Balance: 1000$
+            Balance: 1000 $
+            Income: 1500 $
+            Outcome: 500 $
         </div>
     </div>
 
@@ -35,9 +38,9 @@
             {% for transaction in transactions %}
             <tr>
                 <td>{{ transaction.category }}</td>
-                <td>{{ transaction.status }}</td>
+                <td style="color: {{ 'red' if transaction.status == 'Outcome' else 'green' }};" >{{ transaction.status }}</td>
                 <td>{{ transaction.name }}</td>
-                <td>{{ transaction.amount }}</td>
+                <td style="color: {{ 'red' if transaction.status == 'Outcome' else 'green' }};"> {{ transaction.amount }}</td>
                 <td>{{ transaction.description }}</td>
                 <td>{{ transaction.date_added.strftime('%Y-%m-%d %H:%M:%S') }}</td>
             </tr>
