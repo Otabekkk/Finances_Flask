@@ -14,7 +14,10 @@ db.init_app(app)
 @app.route('/')
 def index() -> render_template:
     transactions = Transaction.query.order_by(Transaction.date_added.desc()).all()
-    return render_template('index.html', transactions = transactions)
+    income = db.session.query(db.func.sum(Transaction.amount)).filter(Transaction.status == 'Income').scalar() or 0
+    outcome = db.session.query(db.func.sum(Transaction.amount)).filter(Transaction.status == 'Outcome').scalar() or 0
+    balance = income - outcome
+    return render_template('index.html', transactions = transactions, balance = balance, income = income, outcome = outcome)
 
 
 @app.route('/add', methods = ['GET', 'POST'])
@@ -26,13 +29,22 @@ def add_transaction():
         amount = request.form.get('amount')
         description = request.form.get('description')
         date_added = datetime.now()
-        new_transaction = Transaction(status = status, category = category, name = name, amount = int(amount), description = description, date_added = date_added)
+        new_transaction = Transaction(status = status, category = category, name = name, amount = float(amount), description = description, date_added = date_added)
         
         db.session.add(new_transaction)
         db.session.commit()
         return redirect(url_for('index'))
     
     return render_template('index.html')
+
+
+@app.route('/delete/<int:id>', methods = ['GET', 'POST'])
+def delete_transaction(id):
+    transaction = Transaction.query.get_or_404(id)
+    db.session.delete(transaction)
+    db.session.commit()
+
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
