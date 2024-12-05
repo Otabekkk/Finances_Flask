@@ -11,6 +11,7 @@ app.secret_key = secrets.token_hex(16)
 db.init_app(app)
 
 
+
 @app.route('/')
 def index() -> render_template:
     transactions = Transaction.query.order_by(Transaction.date_added.desc()).all()
@@ -20,6 +21,8 @@ def index() -> render_template:
     return render_template('index.html', transactions = transactions, balance = balance, income = income, outcome = outcome)
 
 
+
+# Добавление транзакции
 @app.route('/add', methods = ['GET', 'POST'])
 def add_transaction():
     if request.method  == 'POST':
@@ -38,6 +41,28 @@ def add_transaction():
     return render_template('index.html')
 
 
+@app.route('/edit/<int:id>', methods = ['GET', 'POST'])
+def edit_transaction(id):
+    transaction = Transaction.query.get(id)
+
+    if not transaction:
+        return 'Transaction not found!', 404
+    
+    if request.method =='POST':
+        transaction.status = request.form.get('status')
+        transaction.category = request.form.get('category')
+        transaction.name = request.form.get('name')
+        transaction.amount = request.form.get('amount')
+        transaction.description = request.form.get('description')
+        transaction.date_added = datetime.now()
+
+        db.session.commit()
+        return redirect('/')
+    
+    return redirect('/')
+
+
+# Удаление транзакции
 @app.route('/delete/<int:id>', methods = ['GET', 'POST'])
 def delete_transaction(id):
     transaction = Transaction.query.get_or_404(id)
