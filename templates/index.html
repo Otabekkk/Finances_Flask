@@ -49,8 +49,8 @@
                 <th>Amount</th>
                 <th>Description</th>
                 <th>Date</th>
-                <th>Edit transaction</th>
-                <th style="background-color: #ff4500">Delete transaction</th>
+                <th style="background-color: #49ef5c9f;">Edit transaction</th>
+                <th style="background-color: #FF40409f">Delete transaction</th>
             </tr>
             {% for transaction in transactions %}
             <tr>
@@ -77,9 +77,10 @@
                     <!-- <button data-transaction="{{ transaction }}" style="cursor: pointer; background-color: #ffff00; border-radius: 5px;" id="edit-transaction-btn" onclick="openEditModal(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff00ff"><path d="M160-120v-170l527-526q12-12 27-18t30-6q16 0 30.5 6t25.5 18l56 56q12 11 18 25.5t6 30.5q0 15-6 30t-18 27L330-120H160Zm80-80h56l393-392-28-29-29-28-392 393v56Zm560-503-57-57 57 57Zm-139 82-29-28 57 57-28-29ZM560-120q74 0 137-37t63-103q0-36-19-62t-51-45l-59 59q23 10 36 22t13 26q0 23-36.5 41.5T560-200q-17 0-28.5 11.5T520-160q0 17 11.5 28.5T560-120ZM183-426l60-60q-20-8-31.5-16.5T200-520q0-12 18-24t76-37q88-38 117-69t29-70q0-55-44-87.5T280-840q-45 0-80.5 16T145-785q-11 13-9 29t15 26q13 11 29 9t27-13q14-14 31-20t42-6q41 0 60.5 12t19.5 28q0 14-17.5 25.5T262-654q-80 35-111 63.5T120-520q0 32 17 54.5t46 39.5Z"/></svg></button> -->
                 </td>
                 <td>
-                    <form action="{{ url_for('delete_transaction', id = transaction.id) }}", method="POST">
-                        <button style="cursor: pointer; background-color: #FFFF00; border-radius: 10px; border: none;" type="submit" onclick="return confirm('Are you sure you want to delete this transaction?');"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="balck"><path d="M240-800v200-200 640-9.5 9.5-640Zm0 720q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v174q-19-7-39-10.5t-41-3.5v-120H520v-200H240v640h254q8 23 20 43t28 37H240Zm396-20-56-56 84-84-84-84 56-56 84 84 84-84 56 56-83 84 83 84-56 56-84-83-84 83Z"/></svg></button>
-                    </form>
+                    <button data-transaction-id="{{ transaction.id }}" style="cursor: pointer; background-color: #FF40409f; border-radius: 10px; border: none;" type="submit" onclick="deleteModal(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="balck"><path d="M240-800v200-200 640-9.5 9.5-640Zm0 720q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v174q-19-7-39-10.5t-41-3.5v-120H520v-200H240v640h254q8 23 20 43t28 37H240Zm396-20-56-56 84-84-84-84 56-56 84 84 84-84 56 56-83 84 83 84-56 56-84-83-84 83Z"/></svg></button>
+                    <!-- <form action="{{ url_for('delete_transaction', id = transaction.id) }}", method="POST">
+                        <button style="cursor: pointer; background-color: #FF40409f; border-radius: 10px; border: none;" type="submit" onclick="return confirm('Are you sure you want to delete this transaction?');"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="balck"><path d="M240-800v200-200 640-9.5 9.5-640Zm0 720q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v174q-19-7-39-10.5t-41-3.5v-120H520v-200H240v640h254q8 23 20 43t28 37H240Zm396-20-56-56 84-84-84-84 56-56 84 84 84-84 56 56-83 84 83 84-56 56-84-83-84 83Z"/></svg></button>
+                    </form> -->
                 </td>
             </tr>
             {% endfor %}
@@ -168,6 +169,17 @@
                 <button class="modal-close" onclick="closeEditModal()">Cancel</button>
 
             </form>
+        </div>
+    </div>
+
+
+    <!-- Окно для подтверждения удаления -->
+    <div class="confirm_delete" id="confirm">
+        <div class="content">
+            <span class="close" onclick="closeDeleteModal()">&times;</span>
+            <h2>Вы правда хотите удалить транзакцию?</h2>
+            <button id="confirmDeleteBtn">Удалить</button>
+            <button onclick="closeDeleteModal()">Отмена!</button>
         </div>
     </div>
 

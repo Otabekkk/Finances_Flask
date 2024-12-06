@@ -62,7 +62,7 @@ def edit_transaction(id):
 
 
 # Удаление транзакции
-@app.route('/delete/<int:id>', methods = ['GET', 'POST'])
+@app.route('/delete_transaction/<int:id>', methods = ['GET', 'POST', 'DELETE'])
 def delete_transaction(id):
     transaction = Transaction.query.get_or_404(id)
     db.session.delete(transaction)

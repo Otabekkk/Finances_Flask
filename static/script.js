@@ -54,6 +54,32 @@ function openEditModal(button) {
 
 }
 
+function closeDeleteModal() {
+    document.getElementById("confirm").style.display = "none";
+}
+
+
+function deleteModal(button) {
+    const transactionId = button.getAttribute('data-transaction-id');
+
+    document.getElementById("confirm").style.display = 'block';
+
+    document.getElementById("confirmDeleteBtn").onclick = function() {
+        fetch(`delete_transaction/${transactionId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        
+        .then(data => {
+            location.reload();
+        })
+        // form.action = `/delete_transaction/${transactionId}`;
+        closeDeleteModal();
+    }
+}
+
 // function closeEditModal() {
 //     const edit_modal = document.getElementById('edit-transaction-modal');
 //     edit_modal.style.display = 'none';
