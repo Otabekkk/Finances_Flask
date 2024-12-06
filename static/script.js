@@ -13,3 +13,48 @@ function closeModal() {
 function submitTransaction() {
     closeModal();
 }
+
+
+// const editModal = document.getElementById('edit_transaction')
+// const edit_btn = document.getElementById('edit-transaction-btn')
+
+// edit_btn.addEventListener('click', () => {
+//     editModal.style.display = 'flex';
+// })
+
+// function closeEditModal() {
+//     editModal.style.display = 'none';
+// }
+
+// function submitEdit() {
+//     closeEditModal();
+// }
+
+function openEditModal(button) {
+    const edit_modal = document.getElementById('edit_transaction');
+    edit_modal.style.display = 'flex';
+    const form = document.getElementById('edit-transaction-form');
+    
+    const transactionId = button.getAttribute('data-transaction-id');
+    const transactionStatus = button.getAttribute('data-transaction-status');
+    const transactionCategory = button.getAttribute('data-transaction-category');
+    const transactionName = button.getAttribute('data-transaction-name');
+    const transactionDescription = button.getAttribute('data-transaction-description');
+    const transactionAmount = button.getAttribute('data-transaction-amount');
+
+
+    document.getElementById('edit-transaction-id').value = transactionId;
+    document.getElementById('edit-status').value = transactionStatus;
+    document.getElementById('edit-category').value = transactionCategory;
+    document.getElementById('edit-name').value = transactionName;
+    document.getElementById('edit-description').value = transactionDescription;
+    document.getElementById('edit-amount').value = transactionAmount;
+    
+    form.action = `/edit_transaction/${transactionId}`;
+
+}
+
+// function closeEditModal() {
+//     const edit_modal = document.getElementById('edit-transaction-modal');
+//     edit_modal.style.display = 'none';
+// }
