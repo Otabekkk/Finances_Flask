@@ -15,11 +15,18 @@ body {
 .actions button {
     margin: 10px;
     height: 35px;
-    width: 20%;
+    width: 10%;
     cursor: pointer;
     border: 1px solid white;
-    background-color: aquamarine;
+    background-color: #DF73FF;
     border-radius: 15px;
+}
+
+.actions button:hover {
+    background-color: #49ef5c;
+    svg {
+        fill: #fff;
+    }
 }
 
 
@@ -163,7 +170,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 90%; 
+    width: 100%; 
 	/* top: 80%;
 	left: 50%;
 	transform: translate(-50%, -50%); */
@@ -221,4 +228,11 @@ tbody {
 			}
 		}
 	}
+}
+
+.transactions button {
+    background-color: #49ef5c;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
 }
