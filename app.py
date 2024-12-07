@@ -20,10 +20,28 @@ app.secret_key = secrets.token_hex(16)
 
 db.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        hashed_password = generate_password_hash(password, method = 'sha256')
+
+        if User.query.filter_by(username = username).first():
+            return 'Никней уже занят!'
+        
+        new_user = User(username = username, password = hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
+    
+    return render_template('register.html')
 
 
 @app.route('/')
