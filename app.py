@@ -44,6 +44,23 @@ def register():
     return render_template('register.html')
 
 
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        password = request.form.get('password')
+        username = request.form.get('username')
+
+        user = User.query.filter_by(username = username).first()
+
+        if not user or not check_password_hash(user.password, password):
+            return 'Неправильный логин или пароль!'
+        
+        login(user)
+        return redirect(url_for('index'))
+    
+    return render_template('login.html')
+
+
 @app.route('/')
 def index() -> render_template:
     transactions = Transaction.query.order_by(Transaction.date_added.desc()).all()
