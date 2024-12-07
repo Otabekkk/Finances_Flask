@@ -1,14 +1,29 @@
 from flask import Flask, render_template, redirect, request, url_for
-from models import db, Transaction
+from models import db, Transaction, User
 from datetime import datetime
+from flask_login import current_user, LoginManager, login_user, logout_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 
+
 app = Flask(__name__)
+
+# Настройка логина
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
+
+# Настройки бд
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:ztw02@localhost:5432/Finances'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = secrets.token_hex(16)
 
 db.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 
 @app.route('/')
