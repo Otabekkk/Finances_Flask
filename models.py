@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime
 
-db =SQLAlchemy()
+db = SQLAlchemy()
 
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -12,10 +12,11 @@ class Transaction(db.Model):
     amount = db.Column(db.Integer, nullable = False)
     description = db.Column(db.String, nullable = False)
     date_added = db.Column(db.DateTime, nullable = False, default = datetime.now)
-
-    user_id = db.relationship('User', backref = 'user.id', lazy = True)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = True)
  
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(150), unique = True, nullable = False)
     password = db.Column(db.String(150), nullable = False)

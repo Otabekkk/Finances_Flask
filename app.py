@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_login import current_user, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
+# from flask_migrate import Migrate
 
 
 app = Flask(__name__)
@@ -19,7 +20,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = secrets.token_hex(16)
 
 db.init_app(app)
-
+# migrate = Migrate(app, db)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -31,7 +32,7 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        hashed_password = generate_password_hash(password, method = 'sha256')
+        hashed_password = generate_password_hash(password, method = 'pbkdf2:sha256', salt_length=16)
 
         if User.query.filter_by(username = username).first():
             return 'Никней уже занят!'
@@ -50,22 +51,32 @@ def login():
         password = request.form.get('password')
         username = request.form.get('username')
 
-        user = User.query.filter_by(username = username).first()
-
-        if not user or not check_password_hash(user.password, password):
+        try:
+            user = User.query.filter_by(username = username).first()
+            # user = db.session.query(Transaction, User).join(Transaction, User.username == username).first()
+        except:
+        # if not user or not check_password_hash(user.password, password):
             return 'Неправильный логин или пароль!'
         
-        login(user)
+        login_user(user)
         return redirect(url_for('index'))
     
     return render_template('login.html')
 
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
+
 @app.route('/')
+@login_required
 def index() -> render_template:
-    transactions = Transaction.query.order_by(Transaction.date_added.desc()).all()
-    income = db.session.query(db.func.sum(Transaction.amount)).filter(Transaction.status == 'Income').scalar() or 0
-    outcome = db.session.query(db.func.sum(Transaction.amount)).filter(Transaction.status == 'Outcome').scalar() or 0
+    transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
+    income = db.session.query(db.func.sum(Transaction.amount)).filter(Transaction.status == 'Income', Transaction.user_id == current_user.id).scalar() or 0
+    outcome = db.session.query(db.func.sum(Transaction.amount)).filter(Transaction.status == 'Outcome', Transaction.user_id == current_user.id).scalar() or 0
     balance = income - outcome
     return render_template('index.html', transactions = transactions, balance = balance, income = income, outcome = outcome)
 
@@ -81,7 +92,7 @@ def add_transaction():
         amount = request.form.get('amount')
         description = request.form.get('description')
         date_added = datetime.now()
-        new_transaction = Transaction(status = status, category = category, name = name, amount = float(amount), description = description, date_added = date_added)
+        new_transaction = Transaction(status = status, category = category, name = name, amount = float(amount), description = description, date_added = date_added, user_id = current_user.id)
         
         db.session.add(new_transaction)
         db.session.commit()
