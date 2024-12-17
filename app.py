@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, flash
 from models import db, Transaction, User
 from datetime import datetime
 from flask_login import current_user, LoginManager, login_user, logout_user, login_required
@@ -51,15 +51,22 @@ def login():
         password = request.form.get('password')
         username = request.form.get('username')
 
-        try:
-            user = User.query.filter_by(username = username).first()
-            # user = db.session.query(Transaction, User).join(Transaction, User.username == username).first()
-        except:
+        user = User.query.filter_by(username = username).first()
+        if not user or not check_password_hash(user.password, password):
+            flash('Неправильный логин или пароль!')
+            return redirect(url_for('login'))
+        else:
+
+        # try:
+        #     user = User.query.filter_by(username = username).first()
+        #     # user = db.session.query(Transaction, User).join(Transaction, User.username == username).first()
+        # except:
+        #     pass
         # if not user or not check_password_hash(user.password, password):
-            return 'Неправильный логин или пароль!'
+        #     return 'Неправильный логин или пароль!'
         
-        login_user(user)
-        return redirect(url_for('index'))
+            login_user(user)
+            return redirect(url_for('index'))
     
     return render_template('login.html')
 
