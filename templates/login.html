@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='login_register.css') }}">
     <title>Login</title>
+    
 </head>
 <body>
+    
     <!-- <h1>Login</h1>
     <div class="content">
         <form method="POST">
@@ -38,11 +40,15 @@
                 <i class="fas fa-user-plus fa-5x"></i>
                 <h2>Hello, User</h2>
                 <p>Enter your personaldetails and start.</p>
-                <button>Register <i class="fas fa-arrow-circle-right"></i></button>
+                <button id="redirect_register">Register</button>
             </div>
         </div>
         
     </div>
-    
+    <script>
+        document.getElementById('redirect_register').addEventListener('click', function(){
+    window.location.href = "{{ url_for('register') }}";
+})
+    </script>
 </body>
 </html>

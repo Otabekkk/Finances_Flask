@@ -15,21 +15,6 @@ function submitTransaction() {
 }
 
 
-// const editModal = document.getElementById('edit_transaction')
-// const edit_btn = document.getElementById('edit-transaction-btn')
-
-// edit_btn.addEventListener('click', () => {
-//     editModal.style.display = 'flex';
-// })
-
-// function closeEditModal() {
-//     editModal.style.display = 'none';
-// }
-
-// function submitEdit() {
-//     closeEditModal();
-// }
-
 function openEditModal(button) {
     const edit_modal = document.getElementById('edit_transaction');
     edit_modal.style.display = 'flex';
@@ -75,12 +60,7 @@ function deleteModal(button) {
         .then(data => {
             location.reload();
         })
-        // form.action = `/delete_transaction/${transactionId}`;
+
         closeDeleteModal();
     }
 }
-
-// function closeEditModal() {
-//     const edit_modal = document.getElementById('edit-transaction-modal');
-//     edit_modal.style.display = 'none';
-// }
