@@ -3,19 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login_register.css') }}">
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="POST">
+    <!-- <h1>Login</h1>
+    <div class="content">
+        <form method="POST">
 
-        <label for="username">Username:</label>
-        <input type="text" name="username" required>
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
 
-        <label for="password">Password:</label>
-        <input type="text" name="password" required>
+            <label for="password">Password:</label>
+            <input type="text" name="password" required>
 
-        <button type="submit">Reqister</button>
-    </form>
+            <button type="submit">log in</button>
+        </form>
+    </div> -->
+    <div class="container">
+        <div class="login">
+            <div class="container">
+                <form method="POST">
+                    <h1>Log in</h1>
+                    <input type="text" placeholder="Nickname..." name="username" required>
+                    <input type="password" placeholder="Password..." name="password" required>
+                    <button type="submit">Log in</button>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        
+        <div class="register">
+            <div class="container">
+                <i class="fas fa-user-plus fa-5x"></i>
+                <h2>Hello, User</h2>
+                <p>Enter your personaldetails and start.</p>
+                <button>Register <i class="fas fa-arrow-circle-right"></i></button>
+            </div>
+        </div>
+        
+    </div>
+    
 </body>
 </html>
