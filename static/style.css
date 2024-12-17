@@ -42,8 +42,9 @@ body {
     align-items: center;
 }
 
+
 .modal-content {
-    background: #fff;
+    background: #E0FFFF;
     padding: 20px;
     border-radius: 5px;
     text-align: center;
@@ -55,9 +56,12 @@ body {
 }
 
 .modal-content input{
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid black;
     width: 100%;
+    border: 1px solid #007BFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
     height: 30px;
     margin-bottom: 15px;
 }
@@ -71,17 +75,24 @@ body {
 }
 
 .modal-close {
-    background-color: red;
-    color: #fff;
+    background-color: #DC143C;
+    color: black;
     padding: 5px 10px;
+}
+
+.modal-close:hover {
+    background-color: red;
 }
 
 .submit-btn {
-    background-color: green;
-    color: #fff;
+    background-color: #00FA9A;
+    color: black;
     padding: 5px 10px;
 }
 
+.submit-btn:hover {
+    background-color: chartreuse;
+}
 
 .header {
     display: flex;
@@ -285,13 +296,15 @@ tbody {
 }
 
 select {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
     width: 100%;
     height: 30px;
     border: 1px solid #007BFF;
     border-radius: 5px;
     background: #fff;
     color: #333;
-    font-size: 16px;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
