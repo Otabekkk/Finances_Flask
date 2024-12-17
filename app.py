@@ -35,7 +35,8 @@ def register():
         hashed_password = generate_password_hash(password, method = 'pbkdf2:sha256', salt_length=16)
 
         if User.query.filter_by(username = username).first():
-            return 'Никней уже занят!'
+            flash('Такой ник уже занят!')
+            return redirect(url_for('register'))
         
         new_user = User(username = username, password = hashed_password)
         db.session.add(new_user)
@@ -55,7 +56,6 @@ def login():
         if not user or not check_password_hash(user.password, password):
             flash('Неправильный логин или пароль!')
             return redirect(url_for('login'))
-        else:
 
         # try:
         #     user = User.query.filter_by(username = username).first()
@@ -65,8 +65,8 @@ def login():
         # if not user or not check_password_hash(user.password, password):
         #     return 'Неправильный логин или пароль!'
         
-            login_user(user)
-            return redirect(url_for('index'))
+        login_user(user)
+        return redirect(url_for('index'))
     
     return render_template('login.html')
 

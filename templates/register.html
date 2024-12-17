@@ -3,20 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login_register.css') }}">
     <title>Register</title>
 </head>
 <body>
-    <div class="container">
+    <div class="messages" style="position: absolute; top: 50px;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}" style="color: crimson; font-weight: bolder;">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container_register">
         <h1>Register</h1>
         <form method="POST">
             <label for="username">Username:</label>
             <input type="text" name="username" required>
 
             <label for="password">Password:</label>
-            <input type="text" name="password" required>
+            <input type="password" name="password" required >
 
-            <button type="submit">Reqister</button>
+            <button type="submit">Register</button>
         </form>
+        <a href="{{ url_for('login') }}"> Log in</a>
     </div>
 </body>
 </html>
