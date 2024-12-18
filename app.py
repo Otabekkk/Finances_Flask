@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_login import current_user, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
+import plotly.graph_objects as go
 # from flask_migrate import Migrate
 
 
@@ -57,15 +58,7 @@ def login():
         if not user or not check_password_hash(user.password, password):
             flash('Неправильный логин или пароль!')
             return redirect(url_for('login'))
-
-        # try:
-        #     user = User.query.filter_by(username = username).first()
-        #     # user = db.session.query(Transaction, User).join(Transaction, User.username == username).first()
-        # except:
-        #     pass
-        # if not user or not check_password_hash(user.password, password):
-        #     return 'Неправильный логин или пароль!'
-        
+    
         login_user(user)
         return redirect(url_for('index'))
     
@@ -139,11 +132,48 @@ def delete_transaction(id):
 
     return redirect(url_for('index'))
 
+
 @app.route('/table')
 @login_required
 def table():
     transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
     return render_template('table.html', transactions = transactions)
+
+
+@app.route('/dashboard')
+def chart():
+    transactions = Transaction.query.all()
+
+    categories = {}
+
+    for transaction in transactions:
+        if transaction.category not in categories:
+            categories[transaction.category] = 0
+        categories[transaction.category] += transaction.amount if transaction.status == 'Income' else -transaction.amount
+
+    labels = list(categories.keys())
+    values = list(categories.values())
+    colors = ['#00FA9A' if value >= 0 else 'red' for value in values]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x = labels,
+        marker_color = colors,
+        y = values,
+        text = values,
+        textposition = 'auto'
+    ))
+
+    fig.update_layout(
+        title = "Income/Outcome by Category",
+        xaxis_title = 'Categories',
+        yaxis_title = 'Amount',
+        template = 'plotly_white'
+    )
+
+    graph_html = fig.to_html(full_html = False)
+
+    return render_template('dashboard.html', graph_html = graph_html)
 
 if __name__ == '__main__':
     app.run(debug = True)

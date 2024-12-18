@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='table_page.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <title>Dashboard</title>
+</head>
+
+<header>
+    <div class="actions">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="#">Tracking</a>
+        <a href="#">Uploading</a>
+        <a href="{{ url_for('chart') }}">Dashboard</a>
+    </div>
+</header>
+
+<body>
+    <div class="diagram" style="margin-top: 100px;">
+        {{ graph_html | safe }}
+    </div>
+</body>
+</html>

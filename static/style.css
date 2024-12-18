@@ -354,3 +354,34 @@ select option {
     color: #333;
     background: #fff;
 }
+
+.actions {
+    display: flex;
+    background-color: rgba(138, 43, 226, 0.8);
+    border-radius: 25px 10px 25px 10px;
+}
+
+
+.actions a {
+    margin: 10px;
+    color: #49ef5c;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 8px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+
+.actions a:hover{
+    background-color: #49ef5c;
+    color: white;
+}
+
+
+.actions button:hover {
+    background-color: #49ef5c;
+    svg {
+        fill: #fff;
+    }
+}
