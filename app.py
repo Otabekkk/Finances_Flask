@@ -14,9 +14,10 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
-# Настройки бд
+# Настройки бд, и др.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:ztw02@localhost:5432/Finances'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SESSION_COOKIE_SECURE'] = False
 app.secret_key = secrets.token_hex(16)
 
 db.init_app(app)
@@ -138,6 +139,11 @@ def delete_transaction(id):
 
     return redirect(url_for('index'))
 
+@app.route('/table')
+@login_required
+def table():
+    transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
+    return render_template('table.html', transactions = transactions)
 
 if __name__ == '__main__':
     app.run(debug = True)

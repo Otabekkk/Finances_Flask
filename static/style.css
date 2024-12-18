@@ -5,12 +5,14 @@ body {
     background-color: white
 }
 
+
 .actions {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
 }
+
 
 .actions button {
     margin: 10px;
@@ -21,6 +23,7 @@ body {
     background-color: #DF73FF;
     border-radius: 15px;
 }
+
 
 .actions button:hover {
     background-color: #49ef5c;
@@ -51,9 +54,11 @@ body {
     width: 300px;
 }
 
+
 .modal-content label {
     display: block;
 }
+
 
 .modal-content input{
     border-radius: 5px;
@@ -66,6 +71,7 @@ body {
     margin-bottom: 15px;
 }
 
+
 .modal-content button {
     padding: 10px 20px;
     margin: 10px;
@@ -74,15 +80,18 @@ body {
     cursor: pointer;
 }
 
+
 .modal-close {
     background-color: #DC143C;
     color: black;
     padding: 5px 10px;
 }
 
+
 .modal-close:hover {
     background-color: red;
 }
+
 
 .submit-btn {
     background-color: #00FA9A;
@@ -90,9 +99,11 @@ body {
     padding: 5px 10px;
 }
 
+
 .submit-btn:hover {
     background-color: chartreuse;
 }
+
 
 .header {
     display: flex;
@@ -112,17 +123,20 @@ body {
     text-align: center;
 }
 
+
 .balance-card h2 {
     margin-bottom: 15px;
     font-size: 1.5em;
     color: #333;
 }
 
+
 .balance-details {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
+
 
 .balance-item {
     display: flex;
@@ -135,20 +149,24 @@ body {
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
+
 .balance-item p {
     margin: 0;
     font-weight: bold;
     font-size: medium;
 }
 
+
 .balance-item span {
     font-weight: bold;
     color: #333;
 }
 
+
 .balance-item.income span {
     color: green;
 }
+
 
 .balance-item.outcome span {
     color: red;
@@ -163,9 +181,6 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     width: 100%; 
-	/* top: 80%;
-	left: 50%;
-	transform: translate(-50%, -50%); */
 }
 
 table {
