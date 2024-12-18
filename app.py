@@ -1,10 +1,14 @@
-from flask import Flask, render_template, redirect, request, url_for, flash
+from flask import Flask, render_template, redirect, request, url_for, flash, send_file, Response
 from models import db, Transaction, User
 from datetime import datetime
 from flask_login import current_user, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-import secrets
 import plotly.graph_objects as go
+import pandas as pd
+import secrets
+import io
+
+
 # from flask_migrate import Migrate
 
 
@@ -174,6 +178,36 @@ def chart():
     graph_html = fig.to_html(full_html = False)
 
     return render_template('dashboard.html', graph_html = graph_html)
+
+
+@app.route('/export/csv')
+def csv_export():
+    transactions = Transaction.query.all()
+
+    data = [
+        {
+            'ID': transaction.id,
+            'Category': transaction.category,
+            'Status': transaction.status,
+            'Name': transaction.name,
+            'Amount': transaction.amount,
+            'Description': transaction.description,
+            'Date': transaction.date_added.strftime('%Y-%m-%d %H:%M:%S'),
+        } for transaction in transactions
+    ]
+
+    df = pd.DataFrame(data)
+
+    buffer = io.StringIO()
+    df.to_csv(buffer, index = False)
+    buffer.seek(0)
+
+    return Response(
+        buffer,
+        mimetype =  'text/csv',
+        headers = {'Content-Disposition': 'attachment;filename=transactions.csv'}
+    )
+
 
 if __name__ == '__main__':
     app.run(debug = True)
