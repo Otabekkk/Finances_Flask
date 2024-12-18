@@ -5,6 +5,20 @@ body {
     background-color: white
 }
 
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: white;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    background-color: white;
+}
+
+
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -61,7 +75,7 @@ tbody {
 
 
 .transactions {
-    margin: 20px auto;
+    margin-top: 80px;
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -244,10 +258,9 @@ tbody {
 .actions a {
     margin: 10px;
     color: #49ef5c;
-    font-weight: bolder;
+    font-weight: bold;
     border-radius: 15px;
     padding: 8px;
-    background-color: #DF73FF;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -256,17 +269,6 @@ tbody {
 .actions a:hover{
     background-color: #49ef5c;
     color: white;
-}
-
-
-.actions button {
-    margin: 10px;
-    /* height: 35px; */
-    width: 10%;
-    cursor: pointer;
-    border: 1px solid white;
-    background-color: #DF73FF;
-    border-radius: 15px;
 }
 
 

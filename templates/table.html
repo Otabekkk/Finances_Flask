@@ -7,13 +7,17 @@
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
     <title>Table</title>
 </head>
-<body>
 
+<header>
     <div class="actions">
+        <a href="{{ url_for('index') }}">Home</a>
         <a href="#">Tracking</a>
         <a href="#">Uploading</a>
+        <a href="#">Diagrams</a>
     </div>
+</header>
 
+<body>
     <div class="transactions">
         <table>
             <tr>
