@@ -1,5 +1,5 @@
-const modal = document.getElementById('new_transaction');
 const create_btn = document.getElementById('create_btn');
+const modal = document.getElementById('new_transaction');
 
 create_btn.addEventListener('click', () => {
     modal.style.display = 'flex';
@@ -7,11 +7,7 @@ create_btn.addEventListener('click', () => {
 
 
 function closeModal() {
-    modal.style.display = 'none';
-}
-
-function submitTransaction() {
-    closeModal();
+    modal.style.display = "none";
 }
 
 
@@ -39,9 +35,12 @@ function openEditModal(button) {
 
 }
 
-function closeDeleteModal() {
-    document.getElementById("confirm").style.display = "none";
+
+function closeEditModal() {
+    modal_edit = document.getElementById('edit_transaction')
+    modal_edit.style.display = 'none';
 }
+
 
 
 function deleteModal(button) {
@@ -63,4 +62,9 @@ function deleteModal(button) {
 
         closeDeleteModal();
     }
+}
+
+
+function closeDeleteModal() {
+    document.getElementById("confirm").style.display = "none";
 }

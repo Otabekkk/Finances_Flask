@@ -62,7 +62,7 @@ tbody {
 
 .transactions {
     margin: 20px auto;
-    /* overflow-y: auto; */
+    overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -234,3 +234,46 @@ tbody {
     border: none;
     cursor: pointer;
 }
+
+.actions {
+    display: flex;
+    margin-top: 20px;
+}
+
+
+.actions a {
+    margin: 10px;
+    color: #49ef5c;
+    font-weight: bolder;
+    border-radius: 15px;
+    padding: 8px;
+    background-color: #DF73FF;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+
+.actions a:hover{
+    background-color: #49ef5c;
+    color: white;
+}
+
+
+.actions button {
+    margin: 10px;
+    /* height: 35px; */
+    width: 10%;
+    cursor: pointer;
+    border: 1px solid white;
+    background-color: #DF73FF;
+    border-radius: 15px;
+}
+
+
+.actions button:hover {
+    background-color: #49ef5c;
+    svg {
+        fill: #fff;
+    }
+}
+
