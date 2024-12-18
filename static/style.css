@@ -329,7 +329,6 @@ select {
 
 
 select:after {
-    content: "▼";
     position: absolute;
     right: 10px;
     pointer-events: none;
