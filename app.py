@@ -211,7 +211,7 @@ def csv_export():
     return Response(
         buffer,
         mimetype =  'text/csv',
-        headers = {'Content-Disposition': 'attachment;filename=transactions.csv'}
+        headers = {'Content-Disposition': f'attachment;filename={current_user.username}_transactions.csv'}
     )
 
 
@@ -230,12 +230,30 @@ def xlsx_export():
             'Date': transaction.date_added.strftime('%Y-%m-%d %H:%M:%S'),
         } for transaction in transactions
     ]
-
+    
     df = pd.DataFrame(data)
+
+    income = df[df['Status'] == 'Income']
+    outcome = df[df['Status'] == 'Outcome']
+
+    categories = list(set([transaction.category for transaction in transactions]))
+
     buffer = io.BytesIO()
 
     with pd.ExcelWriter(buffer, engine = 'openpyxl') as writer:
         df.to_excel(writer, index = False, sheet_name = 'Transactions')
+
+        if not income.empty:
+            income.to_excel(writer, index = False, sheet_name = 'Доходы')
+
+        if not outcome.empty:
+            outcome.to_excel(writer, index = False, sheet_name = 'Расходы')
+
+        if categories != []:
+            for category in categories:
+                by_categories = df[df['Category'] == category]
+                by_categories.to_excel(writer, index = False, sheet_name = category)
+
 
     buffer.seek(0)
 
