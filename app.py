@@ -209,5 +209,11 @@ def csv_export():
     )
 
 
+@app.route('/export')
+def export_page():
+    return render_template('export.html')
+
+
+
 if __name__ == '__main__':
     app.run(debug = True)

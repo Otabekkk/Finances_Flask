@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+body {
+    font-family: 'Sofia Sans Condensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background-color: white
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: white;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    background-color: rgba(138, 43, 226, 0.8);
+}
+
+.actions {
+    display: flex;
+    margin-top: 20px;
+}
+
+.actions a {
+    margin: 10px;
+    color: #49ef5c;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 8px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.actions a:hover{
+    background-color: #49ef5c;
+    color: white;
+}
+
+.actions button:hover {
+    background-color: #49ef5c;
+    svg {
+        fill: #fff;
+    }
+}
+
+.export {
+    width: 100%;
+    height: 100px;
+    background-color: rgba(36, 246, 106, 0.3);
+    border-radius: 25px 10px 25px 10px;
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.export a {
+    margin: 10px;
+    color: #8A2BE2;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 8px;
+    font-size: 20px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.export a:hover {
+    background-color: #8A2BE2;
+    color: white;
+}
+
+.info {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 20px;
+    background-color: rgba(36, 246, 106, 0.5);;
+    border: 1px solid #ddd;
+    border-radius: 25px 10px 25px 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    color: #333;
+    line-height: 1.6;
+}
+
+.info h1 {
+    font-size: 24px;
+    color: #007BFF;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.info p {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.info ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info li {
+    font-size: 18px;
+    margin: 10px 0;
+    text-align: center;
+    color: #555;
+}
+
+.info strong {
+    color: #007BFF;
+}
+
+.info li:hover {
+    color: #000;
+}
