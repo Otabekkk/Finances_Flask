@@ -215,7 +215,7 @@ def csv_export():
     )
 
 
-@app.route('export/xlsx')
+@app.route('/export/xlsx')
 def xlsx_export():
     transactions = Transaction.query.all()
 
