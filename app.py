@@ -180,6 +180,12 @@ def chart():
     return render_template('dashboard.html', graph_html = graph_html)
 
 
+
+@app.route('/export')
+def export_page():
+    return render_template('export.html')
+
+
 @app.route('/export/csv')
 def csv_export():
     transactions = Transaction.query.all()
@@ -209,10 +215,36 @@ def csv_export():
     )
 
 
-@app.route('/export')
-def export_page():
-    return render_template('export.html')
+@app.route('export/xlsx')
+def xlsx_export():
+    transactions = Transaction.query.all()
 
+    data = [
+        {
+            'ID': transaction.id,
+            'Category': transaction.category,
+            'Status': transaction.status,
+            'Name': transaction.name,
+            'Amount': transaction.amount,
+            'Description': transaction.description,
+            'Date': transaction.date_added.strftime('%Y-%m-%d %H:%M:%S'),
+        } for transaction in transactions
+    ]
+
+    df = pd.DataFrame(data)
+    buffer = io.BytesIO()
+
+    with pd.ExcelWriter(buffer, engine = 'openpyxl') as writer:
+        df.to_excel(writer, index = False, sheet_name = 'Transactions')
+
+    buffer.seek(0)
+
+    return send_file(
+        buffer,
+        as_attachment = True,
+        download_name = f'{current_user.username}_transactions.xlsx',
+        mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 
 
 if __name__ == '__main__':
