@@ -10,9 +10,10 @@
 <header>
     <div class="actions">
         <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('table') }}">Table</a>
         <a href="#">Tracking</a>
-        <a href="#">Export</a>
         <a href="{{ url_for('chart') }}">Dashboard</a>
+        <a href="{{ url_for('export_page') }}">Export</a>
     </div>
 </header>
 
@@ -31,7 +32,7 @@
     </div>
     <div class="export">
         <a href="{{ url_for('csv_export') }}">Export (.csv)</a>
-        <a href="{{ url_for('csv_export') }}">Export (.xlsx)</a>
+        <a href="{{ url_for('xlsx_export') }}">Export (.xlsx)</a>
     </div>
 </body>
 </html>
