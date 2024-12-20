@@ -7,17 +7,17 @@ import plotly.graph_objects as go
 import pandas as pd
 import secrets
 import io
-
-
 # from flask_migrate import Migrate
 
 
 app = Flask(__name__)
 
+
 # Настройка логина
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
+
 
 # Настройки бд, и др.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:ztw02@localhost:5432/Finances'
@@ -25,14 +25,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = False
 app.secret_key = secrets.token_hex(16)
 
+
 db.init_app(app)
 # migrate = Migrate(app, db)
 
+
+# Логин
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+# Регистрация пользователей
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -52,6 +56,7 @@ def register():
     return render_template('register.html')
 
 
+# Логин пользователей
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -69,13 +74,14 @@ def login():
     return render_template('login.html')
 
 
+# Выход из системы
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 
-
+# Главная страница
 @app.route('/')
 @login_required
 def index() -> render_template:
@@ -84,7 +90,6 @@ def index() -> render_template:
     outcome = db.session.query(db.func.sum(Transaction.amount)).filter(Transaction.status == 'Outcome', Transaction.user_id == current_user.id).scalar() or 0
     balance = income - outcome
     return render_template('index.html', transactions = transactions, balance = balance, income = income, outcome = outcome)
-
 
 
 # Добавление транзакции
@@ -106,7 +111,6 @@ def add_transaction():
     return render_template('index.html')
 
 
-
 # Редактирование транзакции
 @app.route('/edit_transaction/<int:id>', methods = ['POST'])
 def edit_transaction(id):
@@ -126,7 +130,6 @@ def edit_transaction(id):
     return redirect('/')
     
 
-
 # Удаление транзакции
 @app.route('/delete_transaction/<int:id>', methods = ['GET', 'POST', 'DELETE'])
 def delete_transaction(id):
@@ -137,6 +140,7 @@ def delete_transaction(id):
     return redirect(url_for('index'))
 
 
+# Таблица
 @app.route('/table')
 @login_required
 def table():
@@ -144,6 +148,7 @@ def table():
     return render_template('table.html', transactions = transactions)
 
 
+# Страница с диграммами
 @app.route('/dashboard')
 def chart():
     transactions = Transaction.query.all()
@@ -179,13 +184,13 @@ def chart():
 
     return render_template('dashboard.html', graph_html = graph_html)
 
-
-
+# Старница экспорта
 @app.route('/export')
 def export_page():
     return render_template('export.html')
 
 
+# Функция для экспорта данных в csv
 @app.route('/export/csv')
 def csv_export():
     transactions = Transaction.query.all()
@@ -214,7 +219,7 @@ def csv_export():
         headers = {'Content-Disposition': f'attachment;filename={current_user.username}_transactions.csv'}
     )
 
-
+# Функция для импорта данных в Excel
 @app.route('/export/xlsx')
 def xlsx_export():
     transactions = Transaction.query.all()
@@ -263,6 +268,12 @@ def xlsx_export():
         download_name = f'{current_user.username}_transactions.xlsx',
         mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+
+
+@app.route('/tracking')
+def tracking():
+    transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
+    return render_template('tracking.html', transactions = transactions)
 
 
 if __name__ == '__main__':
