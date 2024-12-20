@@ -151,7 +151,7 @@ def table():
 # Страница с диграммами
 @app.route('/dashboard')
 def chart():
-    transactions = Transaction.query.all()
+    transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
 
     categories = {}
 
@@ -193,7 +193,7 @@ def export_page():
 # Функция для экспорта данных в csv
 @app.route('/export/csv')
 def csv_export():
-    transactions = Transaction.query.all()
+    transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
 
     data = [
         {
@@ -222,7 +222,7 @@ def csv_export():
 # Функция для импорта данных в Excel
 @app.route('/export/xlsx')
 def xlsx_export():
-    transactions = Transaction.query.all()
+    transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
 
     data = [
         {
@@ -241,7 +241,8 @@ def xlsx_export():
     income = df[df['Status'] == 'Income']
     outcome = df[df['Status'] == 'Outcome']
 
-    categories = list(set([transaction.category for transaction in transactions]))
+    categories = db.session.query(Transaction.category).distinct().all()
+    categories = [category[0] for category in categories]
 
     buffer = io.BytesIO()
 
@@ -273,7 +274,48 @@ def xlsx_export():
 @app.route('/tracking')
 def tracking():
     transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
-    return render_template('tracking.html', transactions = transactions)
+    
+    # Сортировка по категориям
+    categories = db.session.query(Transaction.category).distinct().all()
+    categories = [category[0] for category in categories]
+    
+    categories = [
+        {
+        category: []
+        }
+        for category in categories
+    ]
+
+    for transaction in transactions:
+        for category in categories:
+            if transaction.category in category:
+                category[transaction.category].append(transaction)
+
+    # Сортировка по статусу
+    status = {
+            'Income': [],
+            'Outcome': []
+        }
+
+    for transaction in transactions:
+        if transaction.status == 'Income':
+            status['Income'].append(transaction)
+        else:
+            status['Outcome'].append(transaction)
+
+
+    # print(categories)
+    # by_categories = [[transaction.category, transaction] for transaction in transactions]
+    # print(by_categories)
+
+    # sort_by = ['Category', 'Date', 'Status']
+    # by_category = []
+    # for transaction in transactions:
+        # by_category.append(transaction.category)
+    
+    # by_category = list(set(by_category))
+    # print(by_category)
+    return render_template('tracking.html', categories = categories, status = status)
 
 
 if __name__ == '__main__':

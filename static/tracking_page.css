@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
 body {
     font-family: 'Sofia Sans Condensed', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px;
+    margin: 10px;
     background-color: white
 }
 
@@ -75,12 +75,16 @@ tbody {
 
 
 .transactions {
-    margin-top: 20px;
+    margin-top: 80px;
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     width: 100%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
 }
 
 
@@ -330,6 +334,38 @@ select option {
     background: #fff;
 }
 
-.sort {
+.transactions h1 {
+    font-size: 2rem;
+    color: #4A90E2;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    /* margin-bottom: 20px; */
+    /* padding: 10px; */
+    border-bottom: 2px solid #4A90E2;
+    border-top: 2px solid #4A90E2;
+    display: inline-block;
+}
+
+.transactions h2 {
+    border-top: 2px solid rgba(6, 189, 101, 0.5);;
+    font-size: 30px;
+    color: rgba(6, 189, 101, 0.5);;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     margin-top: 80px;
+    margin-bottom: 30px;
+    padding: 10px;
+    border-bottom: 2px solid rgba(6, 189, 101, 0.5);
+    display: inline-block;
+}
+
+.by_status {
+    width: 100%;
+    margin-top: 80px;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
