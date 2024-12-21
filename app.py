@@ -20,7 +20,7 @@ login_manager.init_app(app)
 
 
 # Настройки бд, и др.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:ztw02@localhost:5432/Finances'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'Your Postgre'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = False
 app.secret_key = secrets.token_hex(16)
@@ -304,17 +304,6 @@ def tracking():
             status['Outcome'].append(transaction)
 
 
-    # print(categories)
-    # by_categories = [[transaction.category, transaction] for transaction in transactions]
-    # print(by_categories)
-
-    # sort_by = ['Category', 'Date', 'Status']
-    # by_category = []
-    # for transaction in transactions:
-        # by_category.append(transaction.category)
-    
-    # by_category = list(set(by_category))
-    # print(by_category)
     return render_template('tracking.html', categories = categories, status = status)
 
 
