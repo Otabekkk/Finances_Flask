@@ -20,7 +20,7 @@ login_manager.init_app(app)
 
 
 # Настройки бд, и др.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:ztw02@localhost:5432/Finances'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'Postgre'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = False
 app.secret_key = secrets.token_hex(16)
