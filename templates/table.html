@@ -15,7 +15,7 @@
         <a href="{{ url_for('tracking') }}">Tracking</a>
         <a href="{{ url_for('chart') }}">Dashboard</a>
         <a href="{{ url_for('export_page') }}">Export</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="#" style="padding: 1px;" onclick="openLogoutModal()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg></a>
     </div>
 </header>
 
@@ -117,5 +117,16 @@
             <button onclick="closeDeleteModal()">Отмена!</button>
         </div>
     </div>
+
+    
+    <!-- Окно подтверждения выхода -->
+    <div class="confirm_logout" id="logout">
+        <div class="content">
+            <h2>Выйти с аккаунтта?</h2>
+            <button onclick="logout()">Выйти</button>
+            <button onclick="closeLogoutModal()">Отмена!</button>
+        </div>
+    </div>
+
 </body>
 </html>

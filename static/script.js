@@ -68,3 +68,19 @@ function deleteModal(button) {
 function closeDeleteModal() {
     document.getElementById("confirm").style.display = "none";
 }
+
+
+
+function openLogoutModal() {
+    document.getElementById('logout').style.display = 'block';
+}
+
+
+function closeLogoutModal() {
+    document.getElementById('logout').style.display = 'none';
+}
+
+
+function logout() {
+    window.location.href = "/logout"
+}
