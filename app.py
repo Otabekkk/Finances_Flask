@@ -224,51 +224,54 @@ def csv_export():
 def xlsx_export():
     transactions = Transaction.query.filter_by(user_id = current_user.id).order_by(Transaction.date_added.desc()).all()
 
-    data = [
-        {
-            'ID': transaction.id,
-            'Category': transaction.category,
-            'Status': transaction.status,
-            'Name': transaction.name,
-            'Amount': transaction.amount,
-            'Description': transaction.description,
-            'Date': transaction.date_added.strftime('%Y-%m-%d %H:%M:%S'),
-        } for transaction in transactions
-    ]
-    
-    df = pd.DataFrame(data)
+    try:
+        data = [
+            {
+                'ID': transaction.id,
+                'Category': transaction.category,
+                'Status': transaction.status,
+                'Name': transaction.name,
+                'Amount': transaction.amount,
+                'Description': transaction.description,
+                'Date': transaction.date_added.strftime('%Y-%m-%d %H:%M:%S'),
+            } for transaction in transactions
+        ]
+        
+        df = pd.DataFrame(data)
 
-    income = df[df['Status'] == 'Income']
-    outcome = df[df['Status'] == 'Outcome']
+        income = df[df['Status'] == 'Income']
+        outcome = df[df['Status'] == 'Outcome']
 
-    categories = db.session.query(Transaction.category).distinct().all()
-    categories = [category[0] for category in categories]
+        categories = db.session.query(Transaction.category).distinct().all()
+        categories = [category[0] for category in categories]
 
-    buffer = io.BytesIO()
+        buffer = io.BytesIO()
 
-    with pd.ExcelWriter(buffer, engine = 'openpyxl') as writer:
-        df.to_excel(writer, index = False, sheet_name = 'Transactions')
+        with pd.ExcelWriter(buffer, engine = 'openpyxl') as writer:
+            df.to_excel(writer, index = False, sheet_name = 'Transactions')
 
-        if not income.empty:
-            income.to_excel(writer, index = False, sheet_name = 'Доходы')
+            if not income.empty:
+                income.to_excel(writer, index = False, sheet_name = 'Доходы')
 
-        if not outcome.empty:
-            outcome.to_excel(writer, index = False, sheet_name = 'Расходы')
+            if not outcome.empty:
+                outcome.to_excel(writer, index = False, sheet_name = 'Расходы')
 
-        if categories != []:
-            for category in categories:
-                by_categories = df[df['Category'] == category]
-                by_categories.to_excel(writer, index = False, sheet_name = category)
+            if categories != []:
+                for category in categories:
+                    by_categories = df[df['Category'] == category]
+                    by_categories.to_excel(writer, index = False, sheet_name = category)
 
 
-    buffer.seek(0)
+        buffer.seek(0)
 
-    return send_file(
-        buffer,
-        as_attachment = True,
-        download_name = f'{current_user.username}_transactions.xlsx',
-        mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
+        return send_file(
+            buffer,
+            as_attachment = True,
+            download_name = f'{current_user.username}_transactions.xlsx',
+            mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+    except:
+        return render_template('export.html')
 
 
 @app.route('/tracking')
