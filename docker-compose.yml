@@ -1,0 +1,30 @@
+networks:
+  dev
+
+
+version: '3.8'
+services:
+  app:
+    build:
+      context: ./
+    depends_on:
+      - db
+    networks:
+      - dev
+  
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: finances
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ztw02
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: 
+      - dev
+
+volumes:
+  pgdata:
