@@ -7,8 +7,14 @@ import plotly.graph_objects as go
 import pandas as pd
 import secrets
 import io
+import os
 # from flask_migrate import Migrate
 
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_NAME = os.getenv("DB_NAME", "finances")
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 app = Flask(__name__)
 
@@ -20,7 +26,7 @@ login_manager.init_app(app)
 
 
 # Настройки бд, и др.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:ztw02@localhost:5433/finances'
+app.config['SQLALCHEMY_DATABASE_URI'] =f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = False
 app.secret_key = secrets.token_hex(16)
@@ -314,5 +320,6 @@ def tracking():
     return render_template('tracking.html', categories = categories, status = status)
 
 
-if __name__ == '__main__':
-    app.run(debug = True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+

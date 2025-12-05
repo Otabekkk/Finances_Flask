@@ -1,8 +1,9 @@
 FROM python:3.13.7-slim
 
+
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY ..
+COPY . .
 
-CMD ['python', 'main.py']
+CMD ["python", "app.py"]
