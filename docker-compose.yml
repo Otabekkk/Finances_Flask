@@ -26,4 +26,5 @@ volumes:
   pgdata:
 
 networks:
-  dev
+  dev:
+    driver: bridge 
